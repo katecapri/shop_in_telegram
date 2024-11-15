@@ -1,4 +1,4 @@
-<h1 align="center">Магазин в телеграме с админ-панелью Django</h1>
+<h1 align="center">Магазин в Телеграме с админ-панелью Django</h1>
 
  ![](https://github.com/katecapri/images-for-readme/blob/main/256.png) ![](https://github.com/katecapri/images-for-readme/blob/main/django.png) ![](https://github.com/katecapri/images-for-readme/blob/main/docker.png)
 
@@ -22,7 +22,7 @@
 
 ##  Инструкция по развертыванию ##
 
-1. В файле окружения в корневой директории задать значение переменным SHOP_BOT_TELEGRAM_TOKEN.
+1. В файле окружения в корневой директории задать значение переменной SHOP_BOT_TELEGRAM_TOKEN.
 2. В корневой директории ввести команду:
 
 > make run
@@ -35,6 +35,7 @@
 ![](https://github.com/katecapri/images-for-readme/blob/main/1_шоп.jpg)
 
 После этого в телеграм-боте осуществляется короткая регистрация, выбираются товары из каталога, оформляется корзина.
+
 ![](https://github.com/katecapri/images-for-readme/blob/main/2_шоп.jpg) 
 ![](https://github.com/katecapri/images-for-readme/blob/main/3_шоп.jpg)
 ![](https://github.com/katecapri/images-for-readme/blob/main/4_шоп.jpg)
