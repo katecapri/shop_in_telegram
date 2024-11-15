@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/application/src/tg_bot/handlers/user_private.py", line 42, in start_cmd
+    1/0
+ZeroDivisionError: division by zero

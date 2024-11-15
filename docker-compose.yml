@@ -1,0 +1,73 @@
+services:
+
+  shop_bot-db:
+    env_file: .env
+    image: ${SHOP_BOT_DB_IMAGE_NAME}
+    ports:
+      - "5432:${SHOP_BOT_DB_PORT}"
+    environment:
+      POSTGRES_USER: ${SHOP_BOT_DB_USERNAME}
+      POSTGRES_PASSWORD: ${SHOP_BOT_DB_PASSWORD}
+      POSTGRES_DB: ${SHOP_BOT_DB_NAME}
+
+  tg_bot:
+    env_file: .env
+    image: ${SHOP_BOT_TG_IMAGE_NAME}
+    restart: unless-stopped
+    environment:
+      DB_USERNAME: ${SHOP_BOT_DB_USERNAME}
+      DB_PASSWORD: ${SHOP_BOT_DB_PASSWORD}
+      DB_DATABASE: ${SHOP_BOT_DB_NAME}
+      DB_PORT: ${SHOP_BOT_DB_PORT}
+      DB_HOST: ${SHOP_BOT_DB_HOST}
+      TELEGRAM_TOKEN: ${SHOP_BOT_TELEGRAM_TOKEN}
+      YOOKASSA_ACCOUNT_ID: ${SHOP_BOT_YOOKASSA_ACCOUNT_ID}
+      YOOKASSA_SECRET_KEY: ${SHOP_BOT_YOOKASSA_SECRET_KEY}
+      BOT_URL: ${SHOP_BOT_BOT_URL}
+    depends_on:
+      - shop_bot-db
+    volumes:
+      - type: bind
+        source: ./media
+        target: /application/src/media
+      - type: bind
+        source: ./logs
+        target: /application/src/logs
+
+  migrations:
+    env_file: .env
+    image: ${SHOP_BOT_MIGRATIONS_IMAGE_NAME}
+    environment:
+      DB_USERNAME: ${SHOP_BOT_DB_USERNAME}
+      DB_PASSWORD: ${SHOP_BOT_DB_PASSWORD}
+      DB_DATABASE: ${SHOP_BOT_DB_NAME}
+      DB_PORT: ${SHOP_BOT_DB_PORT}
+      DB_HOST: ${SHOP_BOT_DB_HOST}
+    depends_on:
+      - shop_bot-db
+
+  admin:
+    env_file: .env
+    image: ${SHOP_BOT_ADMIN_IMAGE_NAME}
+    restart: unless-stopped
+    environment:
+      DB_USERNAME: ${SHOP_BOT_DB_USERNAME}
+      DB_PASSWORD: ${SHOP_BOT_DB_PASSWORD}
+      DB_DATABASE: ${SHOP_BOT_DB_NAME}
+      DB_PORT: ${SHOP_BOT_DB_PORT}
+      DB_HOST: ${SHOP_BOT_DB_HOST}
+    ports:
+      - "8008:${SHOP_BOT_ADMIN_PORT}"
+    volumes:
+      - type: bind
+        source: ./media
+        target: /application/src/media
+    depends_on:
+      - shop_bot-db
+
+
+
+networks:
+  default:
+    name: ${SHOP_BOT_NETWORK}
+    external: true
